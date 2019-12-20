@@ -1,4 +1,4 @@
-# We will now create the PowerShell that does the actual work. We'll start by declaring some variables
+#  will now create the PowerShell that does the actual work. We'll start by declaring some variables
 
 
 param( 
