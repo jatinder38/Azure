@@ -1,0 +1,22 @@
+{
+	"name": "MetaDataFile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageConnection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "folder1",
+				"container": "import"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
