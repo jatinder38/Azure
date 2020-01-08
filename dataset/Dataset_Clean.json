@@ -5,11 +5,18 @@
 			"referenceName": "AzureBlobStorageConnection",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Dest-Export"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@utcnow()",
+					"type": "Expression"
+				},
 				"container": "export"
 			},
 			"columnDelimiter": ",",
