@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "Dataset_Blob",
+						"referenceName": "Dataset_Clean",
 						"type": "DatasetReference"
 					},
 					"name": "sink"
