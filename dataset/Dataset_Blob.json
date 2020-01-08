@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Dest-Source"
+			"name": "Dest-Import"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
