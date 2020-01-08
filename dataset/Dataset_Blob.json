@@ -2,7 +2,7 @@
 	"name": "Dataset_Blob",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorageConnection",
+			"referenceName": "AzureBlobConnection2",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -14,7 +14,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "DimDate.csv",
-				"container": "import"
+				"container": "export"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
