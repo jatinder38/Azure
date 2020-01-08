@@ -510,7 +510,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Source_Dataset_Filesystem')]",
+			"name": "[concat(parameters('factoryName'), '/Dataset_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1049,7 +1049,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "Source_Dataset_Filesystem",
+								"referenceName": "Dataset_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -1455,7 +1455,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Source_Dataset_Filesystem')]",
+				"[concat(variables('factoryId'), '/datasets/Dataset_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Dataset_Blob')]",
 				"[concat(variables('factoryId'), '/datasets/Dataset_DB')]"
 			]
