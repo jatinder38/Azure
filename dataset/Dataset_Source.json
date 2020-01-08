@@ -1,5 +1,5 @@
 {
-	"name": "Source_Dataset_Filesystem",
+	"name": "Dataset_Source",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureFileStorage",
