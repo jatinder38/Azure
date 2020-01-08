@@ -1,0 +1,149 @@
+{
+	"name": "Dataset_DB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseConnection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Destinations"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DateKey",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DayOfMonth",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DayName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DayOfWeekUSA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DayOfYear",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WeekOfMonth",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WeekOfQuarter",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WeekOfYear",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MonthName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Quarter",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QuarterName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Year",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IsHolidayUSA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IsWeekday",
+				"type": "nvarchar"
+			},
+			{
+				"name": "HolidayUSA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalDayOfYear",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalWeekOfYear",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalMonth",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalQuarter",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalQuarterName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalYear",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalYearName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalMonthYear",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalMMYYYY",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalFirstDayOfMonth",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalLastDayOfMonth",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalFirstDayOfQuarter",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalLastDayOfQuarter",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalFirstDayOfYear",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalLastDayOfYear",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DimDate"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

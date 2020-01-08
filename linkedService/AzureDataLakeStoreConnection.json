@@ -1,0 +1,14 @@
+{
+	"name": "AzureDataLakeStoreConnection",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://alphalake.azuredatalakestore.net/webhdfs/v1",
+			"tenant": "9ea30193-d9b7-4dae-ab51-6e68c2db8d69",
+			"subscriptionId": "81fe6e3a-9069-4235-99a3-3b882eed3be0",
+			"resourceGroupName": "AlphavimaResources"
+		}
+	}
+}

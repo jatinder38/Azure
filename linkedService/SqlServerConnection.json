@@ -1,0 +1,17 @@
+{
+	"name": "SqlServerConnection",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "SQL server connection to On-Prem ",
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=dsi-sql;initial catalog=UOS_Dev;user id=dsiuser",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmZTdjOTg0OC0wZjU0LTRkMmEtYWZmMy04NjJkM2ZjNTVmMzIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "TutorialIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
