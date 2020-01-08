@@ -2,7 +2,7 @@
 	"name": "Dataset_Clean",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorageConnection",
+			"referenceName": "AzureBlobConnection2",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
