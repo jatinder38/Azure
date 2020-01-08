@@ -1,0 +1,32 @@
+{
+	"name": "dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Dataset_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Dataset_DB",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SelectColumns"
+				}
+			],
+			"script": "\n\nsource(output(\n\t\tDateKey as string,\n\t\tDate as string,\n\t\tDayOfMonth as string,\n\t\tDayName as string,\n\t\tDayOfWeekUSA as string,\n\t\tDay_OfYear as string,\n\t\tWeekOfMonth as string,\n\t\tWeekOfQuarter as string,\n\t\tWeekOfYear as string,\n\t\tMonth as string,\n\t\tMonthName as string,\n\t\tQuarter as string,\n\t\tQuarterName as string,\n\t\tYear as string,\n\t\tIsHolidayUSA as string,\n\t\tIsWeekday as string,\n\t\tHolidayUSA as string,\n\t\tFiscalDayOfYear as string,\n\t\tFiscalWeekOfYear as string,\n\t\tFiscalMonth as string,\n\t\tFiscalQuarter as string,\n\t\tFiscalQuarterName as string,\n\t\tFiscalYear as string,\n\t\tFiscalYearName as string,\n\t\tFiscalMonthYear as string,\n\t\tFiscalMMYYYY as string,\n\t\tFiscalFirstDayOfMonth as string,\n\t\tFiscalLastDayOfMonth as string,\n\t\tFiscalFirstDayOfQuarter as string,\n\t\tFiscalLastDayOfQuarter as string,\n\t\tFiscalFirstDayOfYear as string,\n\t\tFiscalLastDayOfYear as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source\nsource select(mapColumn(\n\t\tDateKey,\n\t\tDates = Date,\n\t\tDayOfMonth,\n\t\tDayName,\n\t\tDayOfWeekUSA,\n\t\tDayOfYear = Day_OfYear,\n\t\tWeekOfMonth,\n\t\tWeekOfQuarter,\n\t\tWeekOfYear,\n\t\tMonth,\n\t\tMonthName,\n\t\tQuarter,\n\t\tQuarterName,\n\t\tYear,\n\t\tIsHolidayUSA,\n\t\tIsWeekday,\n\t\tHolidayUSA,\n\t\tFiscalDayOfYear,\n\t\tFiscalWeekOfYear,\n\t\tFiscalMonth,\n\t\tFiscalQuarter,\n\t\tFiscalQuarterName,\n\t\tFiscalYear,\n\t\tFiscalYearName,\n\t\tFiscalMonthYear,\n\t\tFiscalMMYYYY,\n\t\tFiscalFirstDayOfMonth,\n\t\tFiscalLastDayOfMonth,\n\t\tFiscalFirstDayOfQuarter,\n\t\tFiscalLastDayOfQuarter,\n\t\tFiscalFirstDayOfYear,\n\t\tFiscalLastDayOfYear\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectColumns\nSelectColumns sink(input(\n\t\tDateKey as string,\n\t\tDate as string,\n\t\tDayOfMonth as string,\n\t\tDayName as string,\n\t\tDayOfWeekUSA as string,\n\t\tDayOfYear as string,\n\t\tWeekOfMonth as string,\n\t\tWeekOfQuarter as string,\n\t\tWeekOfYear as string,\n\t\tMonth as string,\n\t\tMonthName as string,\n\t\tQuarter as string,\n\t\tQuarterName as string,\n\t\tYear as string,\n\t\tIsHolidayUSA as string,\n\t\tIsWeekday as string,\n\t\tHolidayUSA as string,\n\t\tFiscalDayOfYear as string,\n\t\tFiscalWeekOfYear as string,\n\t\tFiscalMonth as string,\n\t\tFiscalQuarter as string,\n\t\tFiscalQuarterName as string,\n\t\tFiscalYear as string,\n\t\tFiscalYearName as string,\n\t\tFiscalMonthYear as string,\n\t\tFiscalMMYYYY as string,\n\t\tFiscalFirstDayOfMonth as string,\n\t\tFiscalLastDayOfMonth as string,\n\t\tFiscalFirstDayOfQuarter as string,\n\t\tFiscalLastDayOfQuarter as string,\n\t\tFiscalFirstDayOfYear as string,\n\t\tFiscalLastDayOfYear as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table') ~> sink"
+		}
+	}
+}
