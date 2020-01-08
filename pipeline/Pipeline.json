@@ -376,7 +376,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Source_Dataset_Filesystem",
+						"referenceName": "Dataset_Source",
 						"type": "DatasetReference"
 					}
 				],
