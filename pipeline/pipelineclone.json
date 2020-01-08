@@ -421,6 +421,7 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": false,
+							"wildcardFileName": "DimDate.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -485,10 +486,6 @@
 								}
 							},
 							{
-								"source": {
-									"name": "Day_OfYear",
-									"type": "String"
-								},
 								"sink": {
 									"name": "DayOfYear",
 									"type": "String"
