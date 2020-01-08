@@ -13,6 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "Output.csv",
 				"container": "export"
 			},
 			"columnDelimiter": ",",
