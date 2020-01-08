@@ -422,7 +422,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "dataflowtask",
+						"activity": "Wait",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -800,6 +800,22 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Wait",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "dataflowtask",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 15
+				}
 			}
 		],
 		"folder": {
