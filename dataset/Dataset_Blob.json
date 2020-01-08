@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Destinations"
+			"name": "Dest-Source"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
