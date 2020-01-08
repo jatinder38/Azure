@@ -1,0 +1,1278 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"AzureFileStorage": {
+			"type": "string"
+		},
+		"AzureBlobStorageConnection": {
+			"type": "string"
+		},
+		"AzureSqlDatabaseConnection": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Stage1_File_to_Blob",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "Files/DimEmployee.csv"
+							},
+							{
+								"name": "Destination",
+								"value": "import//DimEmployee.csv"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "DateKey",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DateKey",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Date",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Date",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DayOfMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DayOfMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DayName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DayName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DayOfWeekUSA",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DayOfWeekUSA",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Day_OfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Day_OfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "WeekOfMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WeekOfMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "WeekOfQuarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WeekOfQuarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "WeekOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WeekOfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Month",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Month",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MonthName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MonthName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Quarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Quarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "QuarterName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "QuarterName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IsHolidayUSA",
+											"type": "String"
+										},
+										"sink": {
+											"name": "IsHolidayUSA",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IsWeekday",
+											"type": "String"
+										},
+										"sink": {
+											"name": "IsWeekday",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "HolidayUSA",
+											"type": "String"
+										},
+										"sink": {
+											"name": "HolidayUSA",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalDayOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalDayOfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalWeekOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalWeekOfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalQuarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalQuarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalQuarterName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalQuarterName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalYearName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalYearName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalMonthYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalMonthYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalMMYYYY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalMMYYYY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalFirstDayOfMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalFirstDayOfMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalLastDayOfMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalLastDayOfMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalFirstDayOfQuarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalFirstDayOfQuarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalLastDayOfQuarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalLastDayOfQuarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalFirstDayOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalFirstDayOfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalLastDayOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalLastDayOfYear",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Source_Dataset_Filesystem",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dataset_Blob",
+								"type": "DatasetReference"
+							}
+						]
+					},
+					{
+						"name": "Stage2_Blob_to_AzureDB",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Stage1_File_to_Blob",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "import//DimDate.csv"
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.DimDate"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "DateKey",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DateKey",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Date",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Date",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DayOfMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DayOfMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DayName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DayName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DayOfWeekUSA",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DayOfWeekUSA",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Day_OfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DayOfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "WeekOfMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WeekOfMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "WeekOfQuarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WeekOfQuarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "WeekOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WeekOfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Month",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Month",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MonthName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MonthName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Quarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Quarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "QuarterName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "QuarterName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IsHolidayUSA",
+											"type": "String"
+										},
+										"sink": {
+											"name": "IsHolidayUSA",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IsWeekday",
+											"type": "String"
+										},
+										"sink": {
+											"name": "IsWeekday",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "HolidayUSA",
+											"type": "String"
+										},
+										"sink": {
+											"name": "HolidayUSA",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalDayOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalDayOfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalWeekOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalWeekOfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalQuarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalQuarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalQuarterName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalQuarterName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalYearName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalYearName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalMonthYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalMonthYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalMMYYYY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalMMYYYY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalFirstDayOfMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalFirstDayOfMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalLastDayOfMonth",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalLastDayOfMonth",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalFirstDayOfQuarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalFirstDayOfQuarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalLastDayOfQuarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalLastDayOfQuarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalFirstDayOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalFirstDayOfYear",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FiscalLastDayOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FiscalLastDayOfYear",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Dataset_Blob",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dataset_DB",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "My Pipelines"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Source_Dataset_Filesystem')]",
+				"[concat(variables('factoryId'), '/datasets/Dataset_Blob')]",
+				"[concat(variables('factoryId'), '/datasets/Dataset_DB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Source_Dataset_Filesystem')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureFileStorage')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Sources"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureFileStorageLocation",
+						"fileName": "DimDate.csv",
+						"folderPath": "Files"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "DateKey",
+						"type": "String"
+					},
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "DayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "DayName",
+						"type": "String"
+					},
+					{
+						"name": "DayOfWeekUSA",
+						"type": "String"
+					},
+					{
+						"name": "Day_OfYear",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfYear",
+						"type": "String"
+					},
+					{
+						"name": "Month",
+						"type": "String"
+					},
+					{
+						"name": "MonthName",
+						"type": "String"
+					},
+					{
+						"name": "Quarter",
+						"type": "String"
+					},
+					{
+						"name": "QuarterName",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "IsHolidayUSA",
+						"type": "String"
+					},
+					{
+						"name": "IsWeekday",
+						"type": "String"
+					},
+					{
+						"name": "HolidayUSA",
+						"type": "String"
+					},
+					{
+						"name": "FiscalDayOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalWeekOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalQuarterName",
+						"type": "String"
+					},
+					{
+						"name": "FiscalYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalYearName",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMonthYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMMYYYY",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfYear",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dataset_Blob')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureBlobStorageConnection')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Destinations"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "DimDate.csv",
+						"container": "import"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "DateKey",
+						"type": "String"
+					},
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "DayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "DayName",
+						"type": "String"
+					},
+					{
+						"name": "DayOfWeekUSA",
+						"type": "String"
+					},
+					{
+						"name": "Day_OfYear",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfYear",
+						"type": "String"
+					},
+					{
+						"name": "Month",
+						"type": "String"
+					},
+					{
+						"name": "MonthName",
+						"type": "String"
+					},
+					{
+						"name": "Quarter",
+						"type": "String"
+					},
+					{
+						"name": "QuarterName",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "IsHolidayUSA",
+						"type": "String"
+					},
+					{
+						"name": "IsWeekday",
+						"type": "String"
+					},
+					{
+						"name": "HolidayUSA",
+						"type": "String"
+					},
+					{
+						"name": "FiscalDayOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalWeekOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalQuarterName",
+						"type": "String"
+					},
+					{
+						"name": "FiscalYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalYearName",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMonthYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMMYYYY",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfYear",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dataset_DB')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureSqlDatabaseConnection')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Destinations"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "DateKey",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DayOfMonth",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DayName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DayOfWeekUSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DayOfYear",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WeekOfMonth",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WeekOfQuarter",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WeekOfYear",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MonthName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Quarter",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QuarterName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Year",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsHolidayUSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsWeekday",
+						"type": "nvarchar"
+					},
+					{
+						"name": "HolidayUSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalDayOfYear",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalWeekOfYear",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalMonth",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalQuarter",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalQuarterName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalYear",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalYearName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalMonthYear",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalMMYYYY",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalFirstDayOfMonth",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalLastDayOfMonth",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalFirstDayOfQuarter",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalLastDayOfQuarter",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalFirstDayOfYear",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalLastDayOfYear",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DimDate"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
