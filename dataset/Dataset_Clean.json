@@ -13,7 +13,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DimDate.csv",
+				"fileName": {
+					"value": "@utcnow()",
+					"type": "Expression"
+				},
 				"container": "export"
 			},
 			"columnDelimiter": ",",
