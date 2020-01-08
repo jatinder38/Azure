@@ -392,7 +392,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Stage1_File_to_Blob",
+						"activity": "dataflow",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -770,6 +770,36 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "dataflow",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Stage1_File_to_Blob",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
 			}
 		],
 		"folder": {
