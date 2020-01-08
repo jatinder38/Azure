@@ -1,5 +1,5 @@
 {
-	"name": "test",
+	"name": "Dataset_Clean",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorageConnection",
