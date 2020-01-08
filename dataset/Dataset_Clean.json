@@ -13,7 +13,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DimDate.csv",
 				"container": "export"
 			},
 			"columnDelimiter": ",",
