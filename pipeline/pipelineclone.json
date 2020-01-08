@@ -390,14 +390,7 @@
 			{
 				"name": "Stage2_Blob_to_AzureDB",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "dataflowtask",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
