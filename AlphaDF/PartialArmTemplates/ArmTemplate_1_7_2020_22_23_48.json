@@ -1,0 +1,174 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AlphaDF"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Dataset_Blob')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorageConnection",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Dest-Source"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "DimDate.csv",
+						"container": "import"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "DateKey",
+						"type": "String"
+					},
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "DayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "DayName",
+						"type": "String"
+					},
+					{
+						"name": "DayOfWeekUSA",
+						"type": "String"
+					},
+					{
+						"name": "Day_OfYear",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfYear",
+						"type": "String"
+					},
+					{
+						"name": "Month",
+						"type": "String"
+					},
+					{
+						"name": "MonthName",
+						"type": "String"
+					},
+					{
+						"name": "Quarter",
+						"type": "String"
+					},
+					{
+						"name": "QuarterName",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "IsHolidayUSA",
+						"type": "String"
+					},
+					{
+						"name": "IsWeekday",
+						"type": "String"
+					},
+					{
+						"name": "HolidayUSA",
+						"type": "String"
+					},
+					{
+						"name": "FiscalDayOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalWeekOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalQuarterName",
+						"type": "String"
+					},
+					{
+						"name": "FiscalYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalYearName",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMonthYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMMYYYY",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfYear",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		}
+	]
+}

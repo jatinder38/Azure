@@ -1,0 +1,133 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AlphaDF"
+		},
+		"AzureBlobStorageConnection_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageConnection'"
+		},
+		"AzureFileStorage_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureFileStorage'"
+		},
+		"AzureSqlDatabaseConnection_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConnection'"
+		},
+		"FileServer_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'FileServer'"
+		},
+		"SqlServerConnection_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServerConnection'"
+		},
+		"AzureDataLakeStoreConnection_properties_typeProperties_dataLakeStoreUri": {
+			"type": "string",
+			"defaultValue": "https://alphalake.azuredatalakestore.net/webhdfs/v1"
+		},
+		"AzureDataLakeStoreConnection_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "9ea30193-d9b7-4dae-ab51-6e68c2db8d69"
+		},
+		"AzureDataLakeStoreConnection_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "81fe6e3a-9069-4235-99a3-3b882eed3be0"
+		},
+		"AzureDataLakeStoreConnection_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "AlphavimaResources"
+		},
+		"AzureFileStorage_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "\\\\alphastorageaccount2.file.core.windows.net\\alpha"
+		},
+		"AzureFileStorage_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "alphastorageaccount2"
+		},
+		"FileServer_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "\\\\alphastorageaccount2.file.core.windows.net\\alpha/Files"
+		},
+		"FileServer_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "alphastorageaccount2"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorageConnection_connectionString": {
+						"value": "[parameters('AzureBlobStorageConnection_connectionString')]"
+					},
+					"FileServer_password": {
+						"value": "[parameters('FileServer_password')]"
+					},
+					"AzureFileStorage_password": {
+						"value": "[parameters('AzureFileStorage_password')]"
+					},
+					"AzureSqlDatabaseConnection_connectionString": {
+						"value": "[parameters('AzureSqlDatabaseConnection_connectionString')]"
+					},
+					"SqlServerConnection_connectionString": {
+						"value": "[parameters('SqlServerConnection_connectionString')]"
+					},
+					"AzureDataLakeStoreConnection_properties_typeProperties_dataLakeStoreUri": {
+						"value": "[parameters('AzureDataLakeStoreConnection_properties_typeProperties_dataLakeStoreUri')]"
+					},
+					"AzureDataLakeStoreConnection_properties_typeProperties_tenant": {
+						"value": "[parameters('AzureDataLakeStoreConnection_properties_typeProperties_tenant')]"
+					},
+					"AzureDataLakeStoreConnection_properties_typeProperties_subscriptionId": {
+						"value": "[parameters('AzureDataLakeStoreConnection_properties_typeProperties_subscriptionId')]"
+					},
+					"AzureDataLakeStoreConnection_properties_typeProperties_resourceGroupName": {
+						"value": "[parameters('AzureDataLakeStoreConnection_properties_typeProperties_resourceGroupName')]"
+					},
+					"FileServer_properties_typeProperties_host": {
+						"value": "[parameters('FileServer_properties_typeProperties_host')]"
+					},
+					"FileServer_properties_typeProperties_userId": {
+						"value": "[parameters('FileServer_properties_typeProperties_userId')]"
+					},
+					"AzureFileStorage_properties_typeProperties_host": {
+						"value": "[parameters('AzureFileStorage_properties_typeProperties_host')]"
+					},
+					"AzureFileStorage_properties_typeProperties_userId": {
+						"value": "[parameters('AzureFileStorage_properties_typeProperties_userId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
