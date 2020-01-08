@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SqlServerConnection'"
 		},
+		"AzureBlobConnection2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobConnection2'"
+		},
 		"AzureDataLakeStoreConnection_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
 			"defaultValue": "https://alphalake.azuredatalakestore.net/webhdfs/v1"
@@ -91,6 +95,9 @@
 					},
 					"FileServer_password": {
 						"value": "[parameters('FileServer_password')]"
+					},
+					"AzureBlobConnection2_connectionString": {
+						"value": "[parameters('AzureBlobConnection2_connectionString')]"
 					},
 					"AzureFileStorage_password": {
 						"value": "[parameters('AzureFileStorage_password')]"

@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'FileServer'"
 		},
+		"AzureBlobConnection2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobConnection2'"
+		},
 		"AzureFileStorage_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureFileStorage'"
@@ -134,12 +138,25 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobConnection2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobConnection2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Dataset_Blob')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConnection",
+					"referenceName": "AzureBlobConnection2",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -151,7 +168,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "DimDate.csv",
-						"container": "import"
+						"container": "export"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -290,7 +307,7 @@
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageConnection')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobConnection2')]"
 			]
 		},
 		{
@@ -299,7 +316,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConnection",
+					"referenceName": "AzureBlobConnection2",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -314,12 +331,142 @@
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
+					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "DateKey",
+						"type": "String"
+					},
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "DayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "DayName",
+						"type": "String"
+					},
+					{
+						"name": "DayOfWeekUSA",
+						"type": "String"
+					},
+					{
+						"name": "Day_OfYear",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "WeekOfYear",
+						"type": "String"
+					},
+					{
+						"name": "Month",
+						"type": "String"
+					},
+					{
+						"name": "MonthName",
+						"type": "String"
+					},
+					{
+						"name": "Quarter",
+						"type": "String"
+					},
+					{
+						"name": "QuarterName",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "IsHolidayUSA",
+						"type": "String"
+					},
+					{
+						"name": "IsWeekday",
+						"type": "String"
+					},
+					{
+						"name": "HolidayUSA",
+						"type": "String"
+					},
+					{
+						"name": "FiscalDayOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalWeekOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalQuarterName",
+						"type": "String"
+					},
+					{
+						"name": "FiscalYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalYearName",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMonthYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalMMYYYY",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfMonth",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfQuarter",
+						"type": "String"
+					},
+					{
+						"name": "FiscalFirstDayOfYear",
+						"type": "String"
+					},
+					{
+						"name": "FiscalLastDayOfYear",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageConnection')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobConnection2')]"
 			]
 		},
 		{
@@ -729,7 +876,7 @@
 							"name": "Select"
 						}
 					],
-					"script": "\n\nsource(output(\n\t\tDateKey as string,\n\t\tDate as string,\n\t\tDayOfMonth as string,\n\t\tDayName as string,\n\t\tDayOfWeekUSA as string,\n\t\tDay_OfYear as string,\n\t\tWeekOfMonth as string,\n\t\tWeekOfQuarter as string,\n\t\tWeekOfYear as string,\n\t\tMonth as string,\n\t\tMonthName as string,\n\t\tQuarter as string,\n\t\tQuarterName as string,\n\t\tYear as string,\n\t\tIsHolidayUSA as string,\n\t\tIsWeekday as string,\n\t\tHolidayUSA as string,\n\t\tFiscalDayOfYear as string,\n\t\tFiscalWeekOfYear as string,\n\t\tFiscalMonth as string,\n\t\tFiscalQuarter as string,\n\t\tFiscalQuarterName as string,\n\t\tFiscalYear as string,\n\t\tFiscalYearName as string,\n\t\tFiscalMonthYear as string,\n\t\tFiscalMMYYYY as string,\n\t\tFiscalFirstDayOfMonth as string,\n\t\tFiscalLastDayOfMonth as string,\n\t\tFiscalFirstDayOfQuarter as string,\n\t\tFiscalLastDayOfQuarter as string,\n\t\tFiscalFirstDayOfYear as string,\n\t\tFiscalLastDayOfYear as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tmultiLineRow: true) ~> source\nsource select(mapColumn(\n\t\tDateKey,\n\t\tDates = Date,\n\t\tDayOfMonth,\n\t\tDayNames = DayName,\n\t\tDayOfWeekUSA,\n\t\tDayOfYears = Day_OfYear,\n\t\tWeekOfMonth,\n\t\tWeekOfQuarter,\n\t\tWeekOfYear,\n\t\tMonth,\n\t\tMonthName,\n\t\tQuarter,\n\t\tQuarterName,\n\t\tYear,\n\t\tIsHolidayUSA,\n\t\tIsWeekday,\n\t\tHolidayUSA,\n\t\tFiscalDayOfYear,\n\t\tFiscalWeekOfYear,\n\t\tFiscalMonth,\n\t\tFiscalQuarter,\n\t\tFiscalQuarterName,\n\t\tFiscalYear,\n\t\tFiscalYearName,\n\t\tFiscalMonthYear,\n\t\tFiscalMMYYYY,\n\t\tFiscalFirstDayOfMonth,\n\t\tFiscalLastDayOfMonth,\n\t\tFiscalFirstDayOfQuarter,\n\t\tFiscalLastDayOfQuarter,\n\t\tFiscalFirstDayOfYear,\n\t\tFiscalLastDayOfYear\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select\nSelect sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionBy('hash', 1)) ~> sink"
+					"script": "\n\nsource(output(\n\t\tDateKey as string,\n\t\tDate as string,\n\t\tDayOfMonth as string,\n\t\tDayName as string,\n\t\tDayOfWeekUSA as string,\n\t\tDay_OfYear as string,\n\t\tWeekOfMonth as string,\n\t\tWeekOfQuarter as string,\n\t\tWeekOfYear as string,\n\t\tMonth as string,\n\t\tMonthName as string,\n\t\tQuarter as string,\n\t\tQuarterName as string,\n\t\tYear as string,\n\t\tIsHolidayUSA as string,\n\t\tIsWeekday as string,\n\t\tHolidayUSA as string,\n\t\tFiscalDayOfYear as string,\n\t\tFiscalWeekOfYear as string,\n\t\tFiscalMonth as string,\n\t\tFiscalQuarter as string,\n\t\tFiscalQuarterName as string,\n\t\tFiscalYear as string,\n\t\tFiscalYearName as string,\n\t\tFiscalMonthYear as string,\n\t\tFiscalMMYYYY as string,\n\t\tFiscalFirstDayOfMonth as string,\n\t\tFiscalLastDayOfMonth as string,\n\t\tFiscalFirstDayOfQuarter as string,\n\t\tFiscalLastDayOfQuarter as string,\n\t\tFiscalFirstDayOfYear as string,\n\t\tFiscalLastDayOfYear as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tmultiLineRow: true) ~> source\nsource select(mapColumn(\n\t\tDateKey,\n\t\tDates = Date,\n\t\tDayOfMonth,\n\t\tDayNames = DayName,\n\t\tDayOfWeekUSA,\n\t\tDayOfYears = Day_OfYear,\n\t\tWeekOfMonth,\n\t\tWeekOfQuarter,\n\t\tWeekOfYear,\n\t\tMonth,\n\t\tMonthName,\n\t\tQuarter,\n\t\tQuarterName,\n\t\tYear,\n\t\tIsHolidayUSA,\n\t\tIsWeekday,\n\t\tHolidayUSA,\n\t\tFiscalDayOfYear,\n\t\tFiscalWeekOfYear,\n\t\tFiscalMonth,\n\t\tFiscalQuarter,\n\t\tFiscalQuarterName,\n\t\tFiscalYear,\n\t\tFiscalYearName,\n\t\tFiscalMonthYear,\n\t\tFiscalMMYYYY,\n\t\tFiscalFirstDayOfMonth,\n\t\tFiscalLastDayOfMonth,\n\t\tFiscalFirstDayOfQuarter,\n\t\tFiscalLastDayOfQuarter,\n\t\tFiscalFirstDayOfYear,\n\t\tFiscalLastDayOfYear\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select\nSelect sink(input(\n\t\tDateKey as string,\n\t\tDate as string,\n\t\tDayOfMonth as string,\n\t\tDayName as string,\n\t\tDayOfWeekUSA as string,\n\t\tDay_OfYear as string,\n\t\tWeekOfMonth as string,\n\t\tWeekOfQuarter as string,\n\t\tWeekOfYear as string,\n\t\tMonth as string,\n\t\tMonthName as string,\n\t\tQuarter as string,\n\t\tQuarterName as string,\n\t\tYear as string,\n\t\tIsHolidayUSA as string,\n\t\tIsWeekday as string,\n\t\tHolidayUSA as string,\n\t\tFiscalDayOfYear as string,\n\t\tFiscalWeekOfYear as string,\n\t\tFiscalMonth as string,\n\t\tFiscalQuarter as string,\n\t\tFiscalQuarterName as string,\n\t\tFiscalYear as string,\n\t\tFiscalYearName as string,\n\t\tFiscalMonthYear as string,\n\t\tFiscalMMYYYY as string,\n\t\tFiscalFirstDayOfMonth as string,\n\t\tFiscalLastDayOfMonth as string,\n\t\tFiscalFirstDayOfQuarter as string,\n\t\tFiscalLastDayOfQuarter as string,\n\t\tFiscalFirstDayOfYear as string,\n\t\tFiscalLastDayOfYear as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Output.csv'],\n\tpartitionBy('hash', 1)) ~> sink"
 				}
 			},
 			"dependsOn": [
@@ -1922,11 +2069,47 @@
 						]
 					},
 					{
+						"name": "dataflowtask",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Stage1_File_to_Blob",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflowtask",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source": {},
+									"sink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					},
+					{
 						"name": "Stage2_Blob_to_AzureDB",
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "dataflowtask",
+								"activity": "Wait",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1955,10 +2138,7 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": false,
-									"wildcardFileName": {
-										"value": "@{pipeline().TriggerName}",
-										"type": "Expression"
-									},
+									"wildcardFileName": "Output.csv",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -2311,39 +2491,19 @@
 						]
 					},
 					{
-						"name": "dataflowtask",
-						"type": "ExecuteDataFlow",
+						"name": "Wait",
+						"type": "Wait",
 						"dependsOn": [
 							{
-								"activity": "Stage1_File_to_Blob",
+								"activity": "dataflowtask",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							}
 						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
 						"userProperties": [],
 						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflowtask",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"source": {},
-									"sink": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
+							"waitTimeInSeconds": 15
 						}
 					}
 				],
@@ -2355,9 +2515,9 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Dataset_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Dataset_Blob')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflowtask')]",
 				"[concat(variables('factoryId'), '/datasets/Dataset_Clean')]",
-				"[concat(variables('factoryId'), '/datasets/Dataset_DB')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflowtask')]"
+				"[concat(variables('factoryId'), '/datasets/Dataset_DB')]"
 			]
 		}
 	]

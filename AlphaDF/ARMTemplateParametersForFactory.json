@@ -20,6 +20,9 @@
 		"SqlServerConnection_connectionString": {
 			"value": ""
 		},
+		"AzureBlobConnection2_connectionString": {
+			"value": ""
+		},
 		"AzureDataLakeStoreConnection_properties_typeProperties_dataLakeStoreUri": {
 			"value": "https://alphalake.azuredatalakestore.net/webhdfs/v1"
 		},
